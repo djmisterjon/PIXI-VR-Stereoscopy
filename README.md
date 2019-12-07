@@ -10,8 +10,10 @@
 | Google  Cardboard         | no | ? |
 ---
 
-#### Reference API
+#### Reference API and SAMPLE
 1. webxr <https://github.com/immersive-web/webxr>
+2. webxr <https://immersive-web.github.io/webxr-samples/>
+2. webxr <https://github.com/immersive-web/webxr-samples>
 2. webvr <https://github.com/immersive-web/webvr-polyfill>
 
 
@@ -28,7 +30,7 @@ var app = new PIXI.Application({
 
 
 
-let renderView = new WebXRView(app.renderer.view, PIXI.WebGLRenderer);
+let renderView = new WebXRView(app.renderer.view, app.renderer);
 
 const stereoLayerL = new PIXI.display.Layer(PIXI.lights.diffuseGroup);
 const stereoLayerR = new PIXI.display.Layer(PIXI.lights.normalGroup);
