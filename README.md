@@ -18,7 +18,8 @@
 
 
 ### TARGET USAGE ###
-this can make no sence, it just some copy past interesting code from api.
+it makes no sense at the moment, I only copy-past interesting code when flying over the webXR API.
+It will be nessesair to be interested in the LOWLEVEL of PixiJs and maybe Pixi-projections, Pixi-layers, Pixi-light.
 
 ```js
 var app = new PIXI.Application({
@@ -27,8 +28,6 @@ var app = new PIXI.Application({
     backgroundColor: 0x2c3e50,
     stereoRenderer:true,
 });
-
-
 
 let renderView = new WebXRView(app.renderer.view, app.renderer);
 
