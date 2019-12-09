@@ -16,7 +16,11 @@
 2. webxr <https://github.com/immersive-web/webxr-samples>
 2. webvr <https://github.com/immersive-web/webvr-polyfill>
 
+https://medium.com/@darktears/https-medium-com-darktears-rendering-immersive-web-experiences-with-three-js-and-webxr-8de7e06982d9
 
+https://hacks.mozilla.org/2015/09/stereoscopic-rendering-in-webvr/
+
+https://medium.com/@mahmoudnafifi/basics-of-stereoscopic-imaging-6f69a7916cfd
 ### TARGET USAGE ###
 it makes no sense at the moment, I only copy-past interesting code when flying over the webXR API.
 It will be nessesair to be interested in the LOWLEVEL of PixiJs and maybe Pixi-projections, Pixi-layers, Pixi-light.
@@ -41,4 +45,43 @@ const stereoLight   = new PIXI.display.Layer(PIXI.lights.lightGroup);
 stereoLayerL.render(frameData.leftProjectionMatrix, frameData.leftViewMatrix, stats, t);
 // Right eye.
 stereoLayerR.render(frameData.rightProjectionMatrix, frameData.rightViewMatrix, stats, t);
+```
+
+note: hum will probably need hack this for update 2 stereo gl
+from api
+```js
+    // Left eye.
+    gl.viewport(0, 0, webglCanvas.width * 0.5, webglCanvas.height);
+    cubeSea.render(frameData.leftProjectionMatrix, frameData.leftViewMatrix, stats, t);
+
+    // Right eye.
+    gl.viewport(webglCanvas.width * 0.5, 0, webglCanvas.width * 0.5, webglCanvas.height);
+    cubeSea.render(frameData.rightProjectionMatrix, frameData.rightViewMatrix, stats, t);
+```
+from pixi
+```js
+  RenderTarget.prototype.activate = function activate() {
+    // TODO refactor usage of frame..
+    var gl = this.gl;
+
+    // make sure the texture is unbound!
+    this.frameBuffer.bind();
+
+    this.calculateProjection(this.destinationFrame, this.sourceFrame);
+
+    if (this.transform) {
+      this.projectionMatrix.append(this.transform);
+    }
+
+    // TODO add a check as them may be the same!
+    if (this.destinationFrame !== this.sourceFrame) {
+      gl.enable(gl.SCISSOR_TEST);
+      gl.scissor(this.destinationFrame.x | 0, this.destinationFrame.y | 0, this.destinationFrame.width * this.resolution | 0, this.destinationFrame.height * this.resolution | 0);
+    } else {
+      gl.disable(gl.SCISSOR_TEST);
+    }
+
+    // TODO - does not need to be updated all the time??
+    gl.viewport(this.destinationFrame.x | 0, this.destinationFrame.y | 0, this.destinationFrame.width * this.resolution | 0, this.destinationFrame.height * this.resolution | 0);
+  };
 ```
